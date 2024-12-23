@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int totalStates = 4;
+    int initialState = 1;
+    int acceptingState = 2;
+
+    // Transition table representing state transitions for 'a' and 'b'
+    int stateTransitions[4][2] = {
+        {2, 3}, // State 1 transitions
+        {1, 4}, // State 2 transitions
+        {4, 1}, // State 3 transitions
+        {3, 2}  // State 4 transitions
+    };
+
+    char inputSequence[] = "abbabab";
+    int sequenceLength = strlen(inputSequence);
+
+    int currentState = initialState;
+
+    for (int index = 0; index < sequenceLength; index++) {
+        char currentChar = inputSequence[index];
+
+        if (currentChar == 'a') {
+            currentState = stateTransitions[currentState - 1][0];
+        } else if (currentChar == 'b') {
+            currentState = stateTransitions[currentState - 1][1];
+        } else {
+            printf("Error: Invalid character '%c' in input\n", currentChar);
+            return 1;
+        }
+    }
+
+    if (currentState == acceptingState) {
+        printf("The input sequence '%s' is accepted\n", inputSequence);
+    } else {
+        printf("The input sequence '%s' is rejected\n", inputSequence);
+    }
+
+    return 0;
+}
